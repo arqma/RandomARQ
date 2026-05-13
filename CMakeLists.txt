@@ -27,7 +27,7 @@
 # STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.12)
 message(STATUS "CMake version ${CMAKE_VERSION}")
 
 project(RandomARQ)
@@ -63,8 +63,10 @@ if(NOT ARCH_ID)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "")
     set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
   endif()
-  string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" ARCH_ID)
+  set(ARCH_ID "${CMAKE_SYSTEM_PROCESSOR}")
 endif()
+# Parent may set ARCH_ID (e.g. Windows "AMD64"); comparisons below expect lowercase.
+string(TOLOWER "${ARCH_ID}" ARCH_ID)
 
 if(NOT ARM_ID)
   set(ARM_ID "${ARCH_ID}")
