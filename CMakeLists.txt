@@ -63,8 +63,10 @@ if(NOT ARCH_ID)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "")
     set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
   endif()
-  string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" ARCH_ID)
+  set(ARCH_ID "${CMAKE_SYSTEM_PROCESSOR}")
 endif()
+# Parent may set ARCH_ID (e.g. Windows "AMD64"); comparisons below expect lowercase.
+string(TOLOWER "${ARCH_ID}" ARCH_ID)
 
 if(NOT ARM_ID)
   set(ARM_ID "${ARCH_ID}")
